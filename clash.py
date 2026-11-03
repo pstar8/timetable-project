@@ -1,11 +1,14 @@
 import pandas as pd
 from itertools import combinations
 
-def load_timetable(path):
-    df = pd.read_csv(path)
-    df["start"] = pd.to_datetime(df["start"], format="%H:%M").dt.time
-    df["end"] = pd.to_datetime(df["end"], format="%H:%M").dt.time
-    return df
+def load_timetable(file):
+    df = pd.read_csv(file)
+    df.columns = df.columns.str.strip().str.lower()
+    for col in ["course", "day", "hall"]:
+        df[col] = df[col].astype(str).str.strip()
+    df["start"] = pd.to_datetime(df["start"].astype(str).str.strip().str[:5], format="%H:%M").dt.time
+    df["end"] = pd.to_datetime(df["end"].astype(str).str.strip().str[:5], format="%H:%M").dt.time
+    return df 
 
 def find_clashes(df):
     clashes = []
