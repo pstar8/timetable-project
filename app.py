@@ -1,11 +1,11 @@
-import streamlit as st
+import streamlit as st  # type: ignore[import-not-found]
 import pandas as pd
 from clash import load_timetable, find_clashes
 
 st.title("Timetable Clash Checker")
 st.write("Upload a timetable to find hall and time clashes.")
 
-uploaded = st.file_uploader("Upload timetable (CSV)", type=["csv"])
+uploaded = st.file_uploader("Upload timetable (CSV or Excel)", type=["csv", "xlsx", "xls"])
 
 if uploaded is not None:
     df = load_timetable(uploaded)
